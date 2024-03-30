@@ -2,7 +2,7 @@
  * @Author: Changhongli lic9@tcd.com
  * @Date: 2024-03-27 17:18:39
  * @LastEditors: Changhongli lic9@tcd.com
- * @LastEditTime: 2024-03-30 14:01:56
+ * @LastEditTime: 2024-03-30 15:11:25
  * @FilePath: /MininetLab/pox/pox/misc/lab/lab2/notes.md
  * @Description: 
  * 
@@ -272,13 +272,8 @@ cd ~/prj/MininetLab/pox
 cd ~/prj/MininetLab/pox/pox/misc/lab/assignment1/
 sudo python3 topo_assignment1.py
 ```
-### Test the firewall application against the topology
+### Kill the thread if controller is not closed correctly
 ```sh
-mininet> pingall
-*** Ping: testing ping reachability
-h1 -> X h3 h4
-h2 -> X h3 h4
-h3 -> h1 h2 X
-h4 -> h1 h2 X
-*** Results: 33% dropped (8/12 received)
+ps -aux | grep pox
+kill 1234
 ```
