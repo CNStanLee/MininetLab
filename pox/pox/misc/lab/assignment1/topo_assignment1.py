@@ -208,7 +208,7 @@ def assignmentTopo():
     print(h3.cmd('iperf -c %s' % h4.IP()))
     time.sleep(1)
 # ------------------------------------------------------------------------------------------- #
-# h1 to h2
+# h1 & h2
 # ------------------------------------------------------------------------------------------- #
     info( '\n\n\n\n*** Testing CIR to H1 to H2\n')
     print(h1.cmd('iperf -c %s' % h2.IP()))
@@ -217,6 +217,35 @@ def assignmentTopo():
     info( '\n\n\n\n*** Testing CIR to H2 to H1\n')
     print(h2.cmd('iperf -c %s' % h1.IP()))
     time.sleep(1)
+# ------------------------------------------------------------------------------------------- #
+# Test timeout
+# ------------------------------------------------------------------------------------------- #
+    h4.cmd('iperf -s &')
+    time.sleep(1)
+    
+    info( '\n\n\n\n*** Testing CIR to H1 to H4\n')
+    info( '\n\n\n\n*** Testing Timeout\n')
+    print(h1.cmd('iperf -c %s' % h4.IP()))
+    
+    info( '\n\n\n\n*** Current Queue(0/50s)\n')
+    os.system("sudo ovs-ofctl dump-flows s1")
+    info( '\n\n\n\n*** Please Wait\n')
+    time.sleep(20)
+
+    info( '\n\n\n\n*** Current Queue(20/50s)\n')
+    os.system("sudo ovs-ofctl dump-flows s1")
+    info( '\n\n\n\n*** Please Wait\n')
+    time.sleep(20)
+    
+    info( '\n\n\n\n*** Current Queue(40/50s)\n')
+    os.system("sudo ovs-ofctl dump-flows s1")
+    info( '\n\n\n\n*** Please Wait\n')
+    time.sleep(10)
+    
+    info( '\n\n\n\n*** Current Queue(50/50s)\n')
+    os.system("sudo ovs-ofctl dump-flows s1")
+    
+
 # ------------------------------------------------------------------------------------------- #
 # release
 # ------------------------------------------------------------------------------------------- #
