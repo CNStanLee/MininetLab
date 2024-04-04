@@ -2,7 +2,7 @@
 Author: Changhongli lic9@tcd.com
 Date: 2024-03-27 16:31:08
 LastEditors: Changhongli lic9@tcd.com
-LastEditTime: 2024-04-03 23:47:11
+LastEditTime: 2024-04-04 13:02:39
 FilePath: /MininetLab/pox/pox/misc/lab/assignment1/controller_assignment1.py
 Description: 
 
@@ -42,7 +42,7 @@ h4_mac = '00:00:00:00:00:05'
 #       h1  h2  h3  h4
 #   h1  /   x   50  250
 #   h2  x   /   100 500
-#   h3  250   o   /   o
+#   h3  250   o   /   ok
 #   h4  250   o   o   /
 
 # h1 should be limited as 250
