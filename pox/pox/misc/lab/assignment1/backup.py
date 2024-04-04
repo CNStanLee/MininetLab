@@ -2,7 +2,7 @@
 Author: Changhongli lic9@tcd.com
 Date: 2024-03-27 16:31:08
 LastEditors: Changhongli lic9@tcd.com
-LastEditTime: 2024-04-03 23:47:11
+LastEditTime: 2024-04-01 16:59:45
 FilePath: /MininetLab/pox/pox/misc/lab/assignment1/controller_assignment1.py
 Description: 
 
@@ -90,7 +90,7 @@ def _handle_PacketIn ( event): # Ths is the main class where your code goes, it 
     sw=dpidToStr(event.dpid)
     inport = event.port     # this records the port from which the packet entered the switch
     eth_packet = event.parsed # this parses  the incoming message as an Ethernet packet
-    log.debug("Event: switch %s port %s packet %s" % (sw, inport, eth_packet)) # this is the way you can add debugging information to your text
+    #log.debug("Event: switch %s port %s packet %s" % (sw, inport, eth_packet)) # this is the way you can add debugging information to your text
 
     table[(event.connection,eth_packet.src)] = event.port   # this associates the given port with the sending node using the source address of the incoming packet
     dst_port = table.get((event.connection,eth_packet.dst)) # if available in the table this line determines the destination port of the incoming packet
@@ -103,16 +103,38 @@ def _handle_PacketIn ( event): # Ths is the main class where your code goes, it 
         event.connection.send(msg)
     else:
         for rule in rules: # now you want to start adding your rules in the flow table. Every time you go through the rules table to check if there is a rule to handle this source-to-destination flow
-            if eth_packet.src==EthAddr(rule['EthSrc']) and eth_packet.dst==EthAddr(rule['EthDst']):
-                # set rules
-                msg = of.ofp_flow_mod()
-                msg.match.dl_src = eth_packet.src
-                msg.match.dl_dst = eth_packet.dst
-                msg.actions = [of.ofp_action_output(port=dst_port)]
-                msg.actions = [of.ofp_action_enqueue(port=dst_port, queue_id=rule['queue'])]
-                msg.hard_timeout = 40
-                # Send the flow mod message to the switch to add the new rule
-                event.connection.send(msg)
+            if eth_packet.dst==EthAddr(rule['EthSrc']) and eth_packet.src==EthAddr(rule['EthDst']):
+                if eth_packet.type == eth.ARP_TYPE:
+                    log.debug("Event: switch %s port %s packet %s" % (sw, inport, eth_packet))
+                    # try to delete the rule of dst node
+                    msg2 = of.ofp_flow_mod()
+                    msg2.priority=100
+                    msg2.match.dl_dst = eth_packet.dst
+                    msg2.match.dl_src = eth_packet.src
+                    #msg2.actions.append(of.ofp_action_enqueue(port=dst_port, queue_id=of.OFPQ_ALL))
+                    msg2.actions = []
+                    # replace the rule of dst node to not limited
+                    #check if the transmission contain node 1, if contain node 1, try to limit with 250M
+                    if (eth_packet.src == h1_mac) or (eth_packet.dst == h1_mac):
+                        msg2.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = rule_cap250))
+                        log.debug("cap250")
+                    else:
+                        msg2.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = rule_capfree))
+                        log.debug("capfree")
+                    #msg2.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = rule_capfree))
+                    #log.debug("capfree")
+                    msg2.hard_timeout = 40
+                    event.connection.send(msg2)
+                    # add a timer thread to make the rule expired
+                    
+                    # add rule to current node
+                    msg = of.ofp_flow_mod()
+                    msg.priority=200
+                    msg.match.dl_dst = eth_packet.src
+                    msg.match.dl_src = eth_packet.dst
+                    msg.actions.append(of.ofp_action_enqueue(port = inport, queue_id = rule['queue']))
+                    msg.hard_timeout = 40
+                    event.connection.send(msg)
                     
                 # send msg    
                 msg = of.ofp_packet_out()

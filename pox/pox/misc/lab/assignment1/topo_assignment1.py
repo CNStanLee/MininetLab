@@ -38,76 +38,6 @@ def assignmentTopo():
     info( '*** Starting network\n')
     net.start()
     h1, h2, h3, h4 = net.hosts[0],net.hosts[1],net.hosts[2],net.hosts[3]
-
-
-
-    #os.system('.....')	#fill in here command to add two queues to port 3 of the switch: Q0 with min rate 20000000 and max rate -SELECT THE PROPER RATE-, Q1 with min rate 50000000 and max rate -SELECT THE PROPER RATE-
-     
-    #os.system('.....')	
-    #fill in here command to add two queues to port 4 of the switch: Q0 with min rate 20000000 and max rate -SELECT THE PROPER RATE-, Q1 with min rate 50000000 and max rate 100000000000
-    
-    # command_dst1 = "sudo ovs-vsctl set port s1-eth1 qos=@newqos -- \
-    # --id=@newqos create qos type=linux-htb \
-    # queues=0=@q0,1=@q1,2=@q2 -- \
-    # --id=@q0 create queue other-config:min-rate=200000000 other-config:max-rate=500000000 -- \
-    # --id=@q1 create queue other-config:min-rate=200000000 other-config:max-rate=1000000000 -- \
-    # --id=@q2 create queue other-config:min-rate=200000000 other-config:max-rate=5000000000"
-    
-    
-    #command_dst1 = "sudo ovs-vsctl -- set port s1-eth1 qos=@newqos \
-    #-- --id=@newqos create qos type=linux-htb queues=0=@q0,1=@q1,2=@q2 \
-    #-- --id=@q0 create queue other-config:min-rate=20000000: other-config:max-rate=50000000\
-    #-- --id=@q1 create queue other-config:min-rate=20000000: other-config:max-rate=100000000\
-    #-- --id=@q2 create queue other-config:min-rate=20000000: other-config:max-rate=500000000"
-    
-    #command_dst2 = "sudo ovs-vsctl -- set port s1-eth2 qos=@newqos \
-    #-- --id=@newqos create qos type=linux-htb queues=0=@q0,1=@q1,2=@q2 \
-    #-- --id=@q0 create queue other-config:min-rate=20000000: other-config:max-rate=50000000\
-    #-- --id=@q1 create queue other-config:min-rate=20000000: other-config:max-rate=100000000\
-    #-- --id=@q2 create queue other-config:min-rate=20000000: other-config:max-rate=500000000"
-    
-    # command_dst3 = 'sudo ovs-vsctl -- set port s1-eth3 qos=@newqos \
-    # -- --id=@newqos create qos type=linux-htb queues=0=@q0,1=@q1,4=@q2 \
-    # -- --id=@q0 create queue other-config:min-rate=20000000: other-config:max-rate=50000000\
-    # -- --id=@q1 create queue other-config:min-rate=20000000: other-config:max-rate=100000000\
-    # -- --id=@q2 create queue other-config:min-rate=0: other-config:max-rate=0'
-    
-    # command_dst4 = 'sudo ovs-vsctl -- set port s1-eth4 qos=@newqos \
-    # -- --id=@newqos create qos type=linux-htb queues=2=@q3,4=@q4 \
-    # -- --id=@q3 create queue other-config:min-rate=20000000: other-config:max-rate=500000000\
-    # -- --id=@q4 create queue other-config:min-rate=0: other-config:max-rate=0'
-    
-    # command_dst1 = "sudo ovs-vsctl set port s1-eth1 qos=@newqos1 -- \
-    # --id=@newqos1 create qos type=linux-htb \
-    # queues=0=@q10,1=@q11,2=@q12,3=@q13 -- \
-    # --id=@q10 create queue other-config:min-rate=20000000 other-config:max-rate=50000000 -- \
-    # --id=@q11 create queue other-config:min-rate=20000000 other-config:max-rate=100000000 -- \
-    # --id=@q12 create queue other-config:min-rate=20000000 other-config:max-rate=500000000 -- \
-    # --id=@q13 create queue other-config:min-rate=20000000 other-config:max-rate=0"
-    
-    # command_dst2 = "sudo ovs-vsctl set port s1-eth2 qos=@newqos2 -- \
-    # --id=@newqos2 create qos type=linux-htb \
-    # queues=0=@q20,1=@q21,2=@q22,3=@q23 -- \
-    # --id=@q20 create queue other-config:min-rate=20000000 other-config:max-rate=50000000 -- \
-    # --id=@q21 create queue other-config:min-rate=20000000 other-config:max-rate=100000000 -- \
-    # --id=@q22 create queue other-config:min-rate=20000000 other-config:max-rate=500000000 -- \
-    # --id=@q23 create queue other-config:min-rate=20000000 other-config:max-rate=0"
-    
-    # command_dst3 = "sudo ovs-vsctl set port s1-eth3 qos=@newqos3 -- \
-    # --id=@newqos3 create qos type=linux-htb \
-    # queues=0=@q30,1=@q31,2=@q32,3=@q33 -- \
-    # --id=@q30 create queue other-config:min-rate=20000000 other-config:max-rate=50000000 -- \
-    # --id=@q31 create queue other-config:min-rate=20000000 other-config:max-rate=100000000 -- \
-    # --id=@q32 create queue other-config:min-rate=20000000 other-config:max-rate=500000000 -- \
-    # --id=@q33 create queue other-config:min-rate=20000000 other-config:max-rate=0"
-    
-    # command_dst4 = "sudo ovs-vsctl set port s1-eth4 qos=@newqos4 -- \
-    # --id=@newqos4 create qos type=linux-htb \
-    # queues=0=@q40,1=@q41,2=@q42,3=@q43 -- \
-    # --id=@q40 create queue other-config:min-rate=20000000 other-config:max-rate=50000000 -- \
-    # --id=@q41 create queue other-config:min-rate=20000000 other-config:max-rate=100000000 -- \
-    # --id=@q42 create queue other-config:min-rate=20000000 other-config:max-rate=500000000 -- \
-    # --id=@q43 create queue other-config:min-rate=20000000 other-config:max-rate=0"
     
     command_dst1 = "sudo ovs-vsctl set port s1-eth1 qos=@newqos1 -- \
     --id=@newqos1 create qos type=linux-htb \
@@ -220,29 +150,29 @@ def assignmentTopo():
 # ------------------------------------------------------------------------------------------- #
 # Test timeout
 # ------------------------------------------------------------------------------------------- #
-    h4.cmd('iperf -s &')
-    time.sleep(1)
+    # h3.cmd('iperf -s &')
+    # time.sleep(1)
     
-    info( '\n\n\n\n*** Testing CIR to H1 to H4\n')
-    info( '\n\n\n\n*** Testing Timeout\n')
-    print(h1.cmd('iperf -c %s' % h4.IP()))
+    # info( '\n\n\n\n*** Testing CIR to H2 to H3\n')
+    # info( '\n\n\n\n*** Testing Timeout\n')
+    # print(h2.cmd('iperf -c %s' % h3.IP()))
     
-    info( '\n\n\n\n*** Current Queue(0/50s)\n')
+    info( '\n\n\n\n*** Current Rules(0/50s)\n')
     os.system("sudo ovs-ofctl dump-flows s1")
     info( '\n\n\n\n*** Please Wait\n')
     time.sleep(20)
 
-    info( '\n\n\n\n*** Current Queue(20/50s)\n')
+    info( '\n\n\n\n*** Current Rules(20/50s)\n')
     os.system("sudo ovs-ofctl dump-flows s1")
     info( '\n\n\n\n*** Please Wait\n')
     time.sleep(20)
     
-    info( '\n\n\n\n*** Current Queue(40/50s)\n')
+    info( '\n\n\n\n*** Current Rules(40/50s)\n')
     os.system("sudo ovs-ofctl dump-flows s1")
     info( '\n\n\n\n*** Please Wait\n')
     time.sleep(10)
     
-    info( '\n\n\n\n*** Current Queue(50/50s)\n')
+    info( '\n\n\n\n*** Current Rules(50/50s)\n')
     os.system("sudo ovs-ofctl dump-flows s1")
     
 
